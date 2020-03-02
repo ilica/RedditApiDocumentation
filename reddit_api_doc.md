@@ -2,6 +2,9 @@
 
 This will walk through the Reddit API.
 
+More information can be found at:
+https://www.reddit.com/dev/api/
+
 Reddit is a social network where an original poster (OP) starts a conversation by beginning a thread. Others respond, and a heirarchy of responses form underneath. People can reward other answers thereby shifting them up by upvoting certain posts or responses. Different topics of conversation are siloed into what are called "subreddits," and there are subreddits for any topic that you can think of like asian beauty products, to politics, to caring for a plant.
 
 The Reddit API will let you do things like check various updates with your own account, post, read comments, and pull batches of posts, or search for posts, and much more. The API methods can be grouped by their autorization scope. If, for example, you are a mod of a subreddit, which means that you have special powers to delete others posts in the subreddit and make other modifications to the rules that that community must abide by, you will get special permissions in the API to be able to replicate that behavior.
