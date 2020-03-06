@@ -4,9 +4,46 @@ This will walk through the Reddit API.
 
 Reddit is a social network where an original poster (OP) starts a conversation by beginning a thread. Others respond, and a heirarchy of responses form underneath. People can reward other answers thereby shifting them up by upvoting certain posts or responses. Different topics of conversation are siloed into what are called "subreddits," and there are subreddits for any topic that you can think of like asian beauty products, to politics, to caring for a plant.
 
-The Reddit API will let you do things like check various updates with your own account, post, read comments, and pull batches of posts, or search for posts, and much more. The API methods can be grouped by their autorization scope. If, for example, you are a mod of a subreddit, which means that you have special powers to delete others posts in the subreddit and make other modifications to the rules that that community must abide by, you will get special permissions in the API to be able to replicate that behavior. 
+The Reddit API will let you do things like check various updates with your own account, post, read comments, and pull batches of posts, or search for posts, and much more. The API methods can be grouped by their autorization scope. If, for example, you are a mod of a subreddit, which means that you have special powers to delete others posts in the subreddit and make other modifications to the rules that that community must abide by, you will get special permissions in the API to be able to replicate that behavior.
 
-Requests are made to the /api/, /message/, /about/, /wiki/, and /subreddit/ end points. 
+First go deal with the authorization that you would need to interact with the API.
+
+1. First, create and account at reddit.com.
+2. After that, go to https://www.reddit.com/prefs/apps and click create app.
+3. Fill in the fields for indicating what you want to do with the app, including the purpose, a small decription, a URI (which can be local host for testing) and then click create.
+4. You will get back a Client ID, and a Client Secret. Export those variables in the terminal so you will have access to them in your python script.
+
+Next, you will need an autorization token which is only valid for a limited period of time. You can get this by writing the following script
+
+
+```python
+import requests
+import requests.auth as auth
+import json
+```
+
+
+```python
+client_auth = requests.auth.HTTPBasicAuth('5kx57BjRfsdtyg', 'ZXxBCkSaG5Gf9vDiLKMbUP7cMbs')
+post_data = {"grant_type": "password", "username": "bakebreadsmellroses", "password": "banana-hammock"}
+headers = {"User-Agent": "ChangeMeClient/0.1 by YourUsername"}
+
+# Make a POST request with information about authorization to get back a json object in response
+# which contains the auth token
+response = requests.post("https://www.reddit.com/api/v1/access_token", auth=client_auth, data=post_data, headers=headers)
+response.json()
+```
+
+
+
+
+    {'access_token': '272808207682-Ei_jijNHhU9YIyHbnoCkw-AuwgA',
+     'token_type': 'bearer',
+     'expires_in': 3600,
+     'scope': '*'}
+
+
+Requests are made to the /api/, /message/, /about/, /wiki/, and /subreddit/ end points.
 
 For example, here is an end point that would tell you about yourself:
 
@@ -48,43 +85,6 @@ Or to view subreddits that are currently new, and we'll use it for the following
 
     'https://oauth.reddit.com/subreddits/new'
 
-
-
-Let's back up, and first go deal with the authorization that you would need to interact with the API. 
-
-1. First, create and account at reddit.com. 
-2. After that, go to https://www.reddit.com/prefs/apps and click create app. 
-3. Fill in the fields for indicating what you want to do with the app, including the purpose, a small decription, a URI (which can be local host for testing) and then click create.
-4. You will get back a Client ID, and a Client Secret. Export those variables in the terminal so you will have access to them in your python script. 
-
-Next, you will need an autorization token which is only valid for a limited period of time. You can get this by writing the following script
-
-
-```python
-import requests
-import requests.auth as auth
-import json
-```
-
-
-```python
-client_auth = requests.auth.HTTPBasicAuth('5kx57BjRfsdtyg', 'ZXxBCkSaG5Gf9vDiLKMbUP7cMbs')
-post_data = {"grant_type": "password", "username": "bakebreadsmellroses", "password": "banana-hammock"}
-headers = {"User-Agent": "ChangeMeClient/0.1 by YourUsername"}
-
-# Make a POST request with information about authorization to get back a json object in response
-# which contains the auth token
-response = requests.post("https://www.reddit.com/api/v1/access_token", auth=client_auth, data=post_data, headers=headers)
-response.json()
-```
-
-
-
-
-    {'access_token': '272808207682-Ei_jijNHhU9YIyHbnoCkw-AuwgA',
-     'token_type': 'bearer',
-     'expires_in': 3600,
-     'scope': '*'}
 
 
 
@@ -247,20 +247,20 @@ response.json()
 
 Here are some of the parameters that you could have passed in to this endpoint:
 
-1. after=[a "fullname"] After will give you enteries that come after the "fullname" of the id of a post. Fullnames consist of somethings "type" and its unique id which then forms a globally unique id on reddit. They start with the prefix for the objects type and then the things unique id in base 36. so for example, the full name for the example above would be t5_2esw3n. 
+1. after=[a "fullname"] After will give you enteries that come after the "fullname" of the id of a post. Fullnames consist of somethings "type" and its unique id which then forms a globally unique id on reddit. They start with the prefix for the objects type and then the things unique id in base 36. so for example, the full name for the example above would be t5_2esw3n.
 
-  * t1's are comments, 
-  * t2's are accounts, 
-  * t3's are links, 
-  * t4's are messages, 
-  * t5's are subreddits and 
+  * t1's are comments,
+  * t2's are accounts,
+  * t3's are links,
+  * t4's are messages,
+  * t5's are subreddits and
   * t6's are awards
-2. before=[a "fullname"] Before will give you enteries that come before the "fullname" of the id of a post. 
+2. before=[a "fullname"] Before will give you enteries that come before the "fullname" of the id of a post.
 3. limit=[a number] which is the maximum number of enteries that you would like to be returned
 
-We get back information like the above that includes all sorts of information about the subreddit like its title, id, if it allows images, its url, the descriptions, if its over 18 and so on. 
+We get back information like the above that includes all sorts of information about the subreddit like its title, id, if it allows images, its url, the descriptions, if its over 18 and so on.
 
-Let's try a few more queries to look at other information. We can run a search for subreddits we are looking for or match key terms. 
+Let's try a few more queries to look at other information. We can run a search for subreddits we are looking for or match key terms.
 
 
 ```python
@@ -400,7 +400,7 @@ Here the parameters could have been:
 1. action=[enum of either "sub" or "unsub"] depending of if you are trying to subscribe or unsubscribe
 2. skip_initial_defaults=[boolean] if you want to or don't want to skip the initial defaults that come with subscribing to a subreddit
 3. sr = [a comma separated list of fullnames] which takes a comma separated list of fullnames of the subreddits you want to subscribe to
-OR 
+OR
 4. sr_name = [a comma separated list of subreddit name] which is a string that is the subreddit's name as shown in its url
 
 Since the api didnt respond with an error, we are following it!
