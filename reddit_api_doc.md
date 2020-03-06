@@ -136,7 +136,7 @@ for item in response.json()['data']['children']:
 
 Cool, so some new subreddits include one for people like photograph of puddles, Netflix movies, and black box engineering etc...
 
-You can also give parameters to the endpoints by doing the following:
+You can also give parameters to the endpoints by doing the following, where I am limiting the number of responses to 1:
 
 
 ```python
@@ -251,9 +251,9 @@ response.json()
 
 
 What I got back here is one example of a subreddit. This is some subreddit named
-Dozlin and and it doesn't have a background color on its page, posting is
-restricted, I am not banned from it, and there is only one subscriber, is some
-of the information that you can get from the json that is returned.
+Dozlin and it doesn't have a background color on its page, ads are not hidden, the description indicates that this subreddit is about a Minecraft user, the subreddit allows images, posting is
+restricted, I am not banned from it, it is not just for people over 18, and there is only one subscriber, is some
+of the information that you can get from the json that is returned. Most of the information is about how the subreddit is set up by the admins, and the other parts of information indicate your accounts relationship with the subreddit. 
 Here are some of the parameters that you could have passed in to this endpoint:
 
 1. after=[a "fullname"] After will give you enteries that come after the "fullname" of the id of a post. Fullnames consist of somethings "type" and its unique id which then forms a globally unique id on reddit. They start with the prefix for the objects type and then the things unique id in base 36. so for example, the full name for the example above would be t5_2esw3n.
