@@ -1,4 +1,4 @@
-Documenting the Reddit API
+# Documenting the Reddit API
 This will walk through the Reddit API.
 
 More information can be found at: https://www.reddit.com/dev/api/
