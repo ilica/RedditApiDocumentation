@@ -14,6 +14,8 @@ First go deal with the authorization that you would need to interact with the AP
 4. You will get back a Client ID, and a Client Secret. Export those variables in the terminal so you will have access to them in your python script.
 
 Next, you will need an autorization token which is only valid for a limited period of time. You can get this by writing the following script
+The User Agent part isn't important and can be anything. Also, keep in mind that the bearer token is only good for 60 minutes, and you will have to do this again
+in an hour.
 
 
 ```python
@@ -93,7 +95,7 @@ Now that we have the auth token, we can make requests to oauth.reddit.com/ and t
 
 ```python
 # Headers that contain the auth token
-headers = {"Authorization": "bearer 272808207682-Ei_jijNHhU9YIyHbnoCkw-AuwgA", "User-Agent": "ChangeMeClient/0.1 by YourUsername"}
+headers = {"Authorization": "INSERT HERE", "User-Agent": "ChangeMeClient/0.1 by YourUsername"}
 
 # Make a GET requestion with the headers, the endpoint, and any parameters, which returns
 # a response object in JSON, which can be parsed for desired output
