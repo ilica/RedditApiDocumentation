@@ -29,8 +29,8 @@ import json
 
 
 ```python
-client_auth = requests.auth.HTTPBasicAuth('5kx57BjRfsdtyg', 'ZXxBCkSaG5Gf9vDiLKMbUP7cMbs')
-post_data = {"grant_type": "password", "username": "bakebreadsmellroses", "password": "banana-hammock"}
+client_auth = requests.auth.HTTPBasicAuth('INSERT AUTH', 'INSERT AUTH')
+post_data = {"grant_type": "password", "username": "bakebreadsmellroses", "password": "INSERT PASS"}
 headers = {"User-Agent": "ChangeMeClient/0.1 by YourUsername"}
 
 # Make a POST request with information about authorization to get back a json object in response
